@@ -17,6 +17,15 @@ template<typename T>
 class BST
 {
 	Node<T>* root;
+	Node<T>* create(T arr[], int begin, int end) 
+	{
+		if(begin > end)	return NULL;
+		int mid = (begin+end) / 2;
+		Node<T>* newnode = new Node<T>(arr[mid]);
+		newnode->left = create(arr, begin, mid-1);
+		newnode->right = create(arr, mid+1, end);
+		return newnode;
+	}
 	static Node<T>* insert(Node<T>* node, T ele)
 	{
 		if(node == NULL)
@@ -64,6 +73,10 @@ class BST
 	}
 public:
 	BST() : root(0)	{}
+	BST(T arr[], int size) 
+	{
+		root = create(arr, 0, size-1);
+	}
 	void insertIter(T ele)
 	{
 		Node<T>* newnode = new Node<T>(ele);
